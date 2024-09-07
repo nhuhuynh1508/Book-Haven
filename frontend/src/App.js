@@ -5,26 +5,26 @@ import Home from './components/home';
 import ShoppingCart from './components/shopping-cart';
 
 const App = () => {
-  const [cart, setCart] = useState([]);
+const [cart, setCart] = useState([]);
 
-  const addToCart = (book) => {
-      setCart(prevCart => {
-          const existingBook = prevCart.find(item => item.ISBN === book.ISBN);
-          if (existingBook) {
-              // Update the quantity of the existing book
-              return prevCart.map(item =>
-                  item.ISBN === book.ISBN
-                      ? { ...item, quantity: item.quantity + 1 }
-                      : item
-              );
-          } else {
-              // Add the new book to the cart
-              return [...prevCart, { ...book, quantity: 1 }];
-          }
-      });
-  };
+const addToCart = (book) => {
+    setCart(prevCart => {
+        const existingBook = prevCart.find(item => item.ISBN === book.ISBN);
+        if (existingBook) {
+            // Update the quantity of the existing book
+            return prevCart.map(item =>
+                item.ISBN === book.ISBN
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+        } else {
+            // Add the new book to the cart
+            return [...prevCart, { ...book, quantity: 1 }];
+        }
+    });
+};
 
-  const cartItemCount = cart.reduce((number, item) => number + item.quantity, 0);
+const cartItemCount = cart.reduce((number, item) => number + item.quantity, 0);
     
     return (
         <div className="bg-white min-h-screen">
