@@ -1,8 +1,17 @@
 import React from "react";
 
-export default function BookItem({ book, addToCart }) {
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/bookSlice";
+
+export default function BookItem({ book }) {
+    const dispatch = useDispatch();
+
+    const handleAddToCart = (book) => {
+        dispatch(addToCart(book));
+    }
+
     return (
-        <div key={book.ISBN} className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
             <img
                 src={book["Image-URL-M"]}
                 alt={book["Book-Title"]}
@@ -17,7 +26,7 @@ export default function BookItem({ book, addToCart }) {
                     <p className="text-gray-500 mt-4">ISBN: {book.ISBN}</p>
                     <button
                         className="ml-4 bg-blue-500 text-white text-lg px-3 py-1 rounded-full hover:bg-blue-700 flex items-center"
-                        onClick={() => addToCart(book)}
+                        onClick={() => handleAddToCart(book.ISBN)}
                     >
                         <img
                             src="/assets/shopping-cart.png"
