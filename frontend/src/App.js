@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Home from './components/home';
-import ShoppingCart from './components/shopping-cart';
+import Home from './pages/home';
+import ShoppingCart from './pages/shopping-cart';
 
 const App = () => {
 const [cart, setCart] = useState([]);
