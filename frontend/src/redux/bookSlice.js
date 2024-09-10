@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     cartItems: [],
-    cartTotalQuantity: 0,
+    wishlistItems: [],
     cartTotalAmount: 0,
 };
 
@@ -20,27 +20,48 @@ const bookSlice = createSlice({
                 const tempBook = {...action.payload, quantity: 1};
                 state.cartItems.push(tempBook);
             }
-
-            state.cartTotalQuantity += 1;
+            state.cartTotalAmount += state.cartItems.reduce(
+                (total, item) => total + item.quantity * item.Price, 0);
         },
+
         removeFromCart(state, action) {
             const bookIndex = state.cartItems.findIndex(
                 (book) => book.ISBN === action.payload.ISBN);
             if (bookIndex >= 0) {
                 state.cartItems[bookIndex].quantity -= 1;
-                state.cartTotalQuantity -= 1;
                 if (state.cartItems[bookIndex].quantity === 0) {
                     state.cartItems.splice(bookIndex, 1);
                 }
             }
+            state.cartTotalAmount -= state.cartItems.reduce(
+                (total, item) => total + item.quantity * item.Price, 0);
         },
-        clearCart(state, action) {
+
+        clearCart(state) {
             state.cartItems = [];
-            action.cartTotalQuantity = 0;
+        },
+
+        updateQuantity(state, action) {
+            const bookIndex = state.cartItems.findIndex(
+                (book) => book.ISBN === action.payload.ISBN);
+            if (bookIndex >= 0) {
+                state.cartItems[bookIndex].quantity = action.payload.quantity;
+            }
+            state.cartTotalAmount = state.cartItems.reduce(
+                (total, item) => total + item.quantity * item.Price, 0);
+        },
+
+        addToWishList(state, action) {
+            const bookIndex = state.wishlistItems.findIndex(
+                (book) => book.ISBN === action.payload.ISBN);
+            // if the book isn;'t added to the wishlist
+            if (bookIndex === -1) {
+                state.wishlistItems.push(action.payload);
+            }
         }
-    },
+    }
 });
 
-export const { addToCart, removeFromCart, clearCart } = bookSlice.actions;
+export const { addToCart, removeFromCart, clearCart, updateQuantity, addToWishList } = bookSlice.actions;
 
 export default bookSlice.reducer;

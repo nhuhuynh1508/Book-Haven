@@ -1,9 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import Cart from "../components/cart";
+import Cart from "./components/cart";
 
 function ShoppingCart() {
+    const cartItems = useSelector((state) => state.book.cartItems);
+    const cartTotalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+
     return (
         <>
             <div className="mt-20">
@@ -33,7 +37,12 @@ function ShoppingCart() {
                     />
                 </div>
             </div>
-            <h1 className="text-5xl font-serif p-4">Cart</h1>
+            <div className="flex justify-between items-center p-4">
+                <div className="flex items-center">
+                    <span className="text-5xl font-serif border-b-2 border-gray-300 pb-2">Cart</span>
+                </div>
+                <span className="font-serif text-black pt-6">Total Quantity: {cartTotalQuantity}</span>
+            </div>
             <Cart />
         </>
     );

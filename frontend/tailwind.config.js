@@ -323,6 +323,7 @@ module.exports = {
       ],
       pacifico: ['Pacifico'],
       lato: ['Lato'],
+      montserrat: ['Montserrat'],
     },
     fontSize: {
       xs: ['0.75rem', { lineHeight: '1rem' }],
